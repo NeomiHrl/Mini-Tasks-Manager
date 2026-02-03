@@ -1,15 +1,14 @@
-Mini Task Manager
+## Mini Task Manager
 
 A minimal full-stack task manager demo (React + Node.js).
 
-How to Run-
+### Tech Stack
+- React
+- Node.js
+- MySQL
 
-Backend (API Server):
-cd Backend
-node server.js
+### How to run
+1. npm install
+2. npm run dev
 
-Frontend (React Client):
 
-cd frontend/my-react-app
-npm install
-npm run dev
