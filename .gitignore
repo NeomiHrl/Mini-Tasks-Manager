@@ -1,0 +1,8 @@
+node_modules/
+.env
+.DS_Store
+*.log
+frontend/my-react-app/node_modules/
+frontend/my-react-app/.env
+frontend/my-react-app/.DS_Store
+frontend/my-react-app/*.log
