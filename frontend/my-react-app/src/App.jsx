@@ -46,6 +46,15 @@ function App() {
     { value: 'in_progress', label: 'בתהליך' },
     { value: 'done', label: 'בוצע' },
   ];
+  const priorityOptions = [
+    { value: 'low', label: 'נמוכה' },
+    { value: 'medium', label: 'בינונית' },
+    { value: 'high', label: 'גבוהה' },
+  ];
+  const getPriorityLabel = (priority) => {
+    const found = priorityOptions.find(opt => opt.value === priority);
+    return found ? found.label : priority;
+  };
 
   // דיאלוג מחיקה
   const [deleteDialog, setDeleteDialog] = useState({ open: false, taskId: null });
@@ -94,7 +103,14 @@ function App() {
         );
       },
     },
-    { headerName: 'עדיפות', field: 'priority', width: 120, sortable: true, filter: 'agTextColumnFilter' },
+    {
+      headerName: 'עדיפות',
+      field: 'priority',
+      width: 120,
+      sortable: true,
+      filter: 'agTextColumnFilter',
+      cellRenderer: (params) => getPriorityLabel(params.value)
+    },
     { headerName: 'תאריך יעד', field: 'dueDate', width: 120, sortable: true, filter: 'agTextColumnFilter' },
     {
       headerName: 'תלויות',

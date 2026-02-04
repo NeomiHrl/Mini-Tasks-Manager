@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { addTask } from '../Api/ApiTasks';
 import './AddTask.css';
 
@@ -99,13 +99,29 @@ function AddTask({ existingTasks, onTaskAdded, setStatusError }) {
         <label>תאריך יעד</label>
         <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} />
       </div>
-      <div>
-        <label>תלויות (משימות קיימות)</label>
-        <select multiple value={dependencies} onChange={e => setDependencies(Array.from(e.target.selectedOptions, opt => Number(opt.value)))}>
+      <div style={{ direction: 'rtl', textAlign: 'right' }}>
+        <label style={{ fontWeight: 500, marginBottom: 4, display: 'block' }}>תלויות (משימות קיימות)</label>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2, maxHeight: 120, overflowY: 'auto', padding: 0, background: 'none' }}>
+          {existingTasks && existingTasks.length === 0 && <span style={{ color: '#888' }}>אין משימות קיימות</span>}
           {existingTasks && existingTasks.map(task => (
-            <option key={task.id} value={task.id}>{task.title}</option>
+            <label key={task.id} style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 400, cursor: 'pointer', padding: '2px 0' }}>
+              <input
+                type="checkbox"
+                value={task.id}
+                checked={dependencies.includes(task.id)}
+                onChange={e => {
+                  if (e.target.checked) {
+                    setDependencies([...dependencies, task.id]);
+                  } else {
+                    setDependencies(dependencies.filter(id => id !== task.id));
+                  }
+                }}
+                style={{ width: 16, height: 16, accentColor: '#b36ae2', marginLeft: 4, marginRight: 0, cursor: 'pointer' }}
+              />
+              <span style={{ fontSize: '1rem' }}>{task.title}</span>
+            </label>
           ))}
-        </select>
+        </div>
       </div>
       {error && <div className="error-message">{error}</div>}
       {success && <div style={{ color: '#4BB543', fontWeight: 600, margin: '12px 0', fontSize: '1.1rem', background: '#e1ffe1', borderRadius: '8px', padding: '8px 0' }}>המשימה נוספה בהצלחה!</div>}
